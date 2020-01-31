@@ -18,6 +18,7 @@ public final class DynFarming extends JavaPlugin implements Listener {
 		if(DEBUG) {
 			registerListener(this);
 		}
+		registerListener(new HarvestListener(this));
 	}
 	
 	@Override
