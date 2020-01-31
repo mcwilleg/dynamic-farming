@@ -1,4 +1,4 @@
-package com.neo.agriculture;
+package com.neo.dynfarming;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
