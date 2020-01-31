@@ -1,0 +1,7 @@
+name: DynamicFarming
+version: 0.0.1-alpha
+main: com.neo.agriculture.DynFarming
+api-version: 1.13
+prefix: DynFarming
+authors: [Neo]
+description: Add animal needs and rewards to farming on your server!
