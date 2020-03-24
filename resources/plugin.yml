@@ -1,6 +1,6 @@
 name: DynamicFarming
 version: 0.0.1-alpha
-main: com.neo.agriculture.DynFarming
+main: com.neo.dynfarming.DynFarming
 api-version: 1.13
 prefix: DynFarming
 authors: [Neo]
