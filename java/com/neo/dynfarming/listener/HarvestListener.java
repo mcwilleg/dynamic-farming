@@ -2,11 +2,14 @@ package com.neo.dynfarming.listener;
 
 import com.neo.dynfarming.condition.Condition;
 import com.neo.dynfarming.condition.ConditionFactory;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +22,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class HarvestListener implements Listener {
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onEntityDeath(EntityDeathEvent event) {
 		LivingEntity victim = event.getEntity();
 		if(victim.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
@@ -73,7 +76,47 @@ public class HarvestListener implements Listener {
 		}
 	}
 	
-	private int getLootingModifier(double multiplier) {
+	@EventHandler(ignoreCancelled = true)
+	public void onBlockBreak(BlockBreakEvent event) {
+		Block block = event.getBlock();
+		Condition condition = ConditionFactory.getCondition(block);
+		if(condition == null) {
+			// ignore invalid blocks
+			return;
+		}
+		
+		double multiplier = condition.getDropMultiplier();
+		
+		Player player = event.getPlayer();
+		if(player != null) {
+			Random random = new Random(System.currentTimeMillis());
+			Collection<ItemStack> drops = block.getDrops();
+			Iterator<ItemStack> iter = drops.iterator();
+			
+			event.setCancelled(true);
+			block.setType(Material.AIR);
+			
+			while(iter.hasNext()) {
+				ItemStack i = iter.next();
+				double amount = i.getAmount();
+				if(!i.getType().name().endsWith("_SEEDS")) {
+					amount *= multiplier;
+					int truncated = (int) amount;
+					double chance = amount - truncated;
+					if(random.nextDouble() < chance) {
+						truncated += 1;
+					} else if(truncated == 0) {
+						iter.remove();
+						continue;
+					}
+					i.setAmount(truncated);
+				}
+				block.getWorld().dropItemNaturally(block.getLocation(), i.clone());
+			}
+		}
+	}
+	
+	private static int getLootingModifier(double multiplier) {
 		if(multiplier < 1) {
 			return 0;
 		} else if(multiplier >= 5) {
@@ -82,7 +125,7 @@ public class HarvestListener implements Listener {
 		return (int) (5 * multiplier - 5);
 	}
 	
-	private float getLuck(double multiplier) {
+	private static float getLuck(double multiplier) {
 		if(multiplier < 0) {
 			return -1.25f;
 		} else if(multiplier >= 5) {

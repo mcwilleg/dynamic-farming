@@ -1,5 +1,6 @@
 package com.neo.dynfarming.condition;
 
+import com.neo.dynfarming.condition.block.CropCondition;
 import com.neo.dynfarming.condition.entity.LivestockCondition;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
@@ -17,6 +18,10 @@ public class ConditionFactory {
 	}
 	
 	public static Condition getCondition(Block block) {
+		String typeName = block.getType().name();
+		if(CROPS.contains(typeName)) {
+			return new CropCondition(block);
+		}
 		return null;
 	}
 	
@@ -30,5 +35,16 @@ public class ConditionFactory {
 			"PIG",
 			"SHEEP",
 			"TRADER_LLAMA"
+	);
+	
+	private static final List<String> CROPS = Arrays.asList(
+			"WHEAT",
+			"BEETROOTS",
+			"CARROTS",
+			"POTATOES",
+			"MELON_STEM",
+			"ATTACHED_MELON_STEM",
+			"PUMPKIN_STEM",
+			"ATTACHED_PUMPKIN_STEM"
 	);
 }

@@ -14,9 +14,9 @@ public class BlockEnvironment extends Environment {
 		super(center, radius);
 		this.blocks = new HashMap<>();
 		
-		for(int x = minLocation.getBlockX(); x < maxLocation.getBlockX(); x++) {
-			for(int z = minLocation.getBlockZ(); z < maxLocation.getBlockZ(); z++) {
-				for(int y = minLocation.getBlockY(); y < maxLocation.getBlockZ(); y++) {
+		for(int x = minLocation.getBlockX(); x <= maxLocation.getBlockX(); x++) {
+			for(int z = minLocation.getBlockZ(); z <= maxLocation.getBlockZ(); z++) {
+				for(int y = minLocation.getBlockY(); y <= maxLocation.getBlockY(); y++) {
 					Block block = center.getWorld().getBlockAt(x, y, z);
 					if(block.getLocation().distance(center) <= radius) {
 						Material material = block.getType();
