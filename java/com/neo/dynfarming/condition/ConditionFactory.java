@@ -33,18 +33,13 @@ public class ConditionFactory {
 			"MULE",
 			"MUSHROOM_COW",
 			"PIG",
-			"SHEEP",
-			"TRADER_LLAMA"
+			"SHEEP"
 	);
 	
 	private static final List<String> CROPS = Arrays.asList(
 			"WHEAT",
 			"BEETROOTS",
 			"CARROTS",
-			"POTATOES",
-			"MELON_STEM",
-			"ATTACHED_MELON_STEM",
-			"PUMPKIN_STEM",
-			"ATTACHED_PUMPKIN_STEM"
+			"POTATOES"
 	);
 }

@@ -7,8 +7,6 @@ import com.neo.dynfarming.condition.entity.LivestockCondition;
 import com.neo.dynfarming.listener.HarvestListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -19,14 +17,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
 
 public final class DynFarming extends JavaPlugin implements Listener {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
+	
 	private static boolean COLOR = true;
 	
 	// TODO remove debug
@@ -61,7 +59,6 @@ public final class DynFarming extends JavaPlugin implements Listener {
 			LivingEntity victim = (LivingEntity) entity;
 			Condition condition = ConditionFactory.getCondition(victim);
 			if(condition instanceof LivestockCondition) {
-				// TODO remove debug
 				ChatColor c = ChatColor.GRAY;
 				if(COLOR) {
 					c = ChatColor.DARK_GRAY;
@@ -87,7 +84,6 @@ public final class DynFarming extends JavaPlugin implements Listener {
 		Block block = event.getClickedBlock();
 		Condition condition = ConditionFactory.getCondition(block);
 		if(condition instanceof CropCondition) {
-			// TODO remove debug
 			ChatColor c = ChatColor.GRAY;
 			if(COLOR) {
 				c = ChatColor.DARK_GRAY;
@@ -100,13 +96,5 @@ public final class DynFarming extends JavaPlugin implements Listener {
 			player.sendMessage(c + "Population: " + DECIMAL.format(cc.getPopulationMultiplier()));
 			player.sendMessage(c + "Multiplier: " + DECIMAL.format(cc.getDropMultiplier()));
 		}
-	}
-	
-	@EventHandler
-	public void onPlayerLogin(PlayerLoginEvent event) {
-		Player player = event.getPlayer();
-		player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).addModifier(
-				new AttributeModifier("testAttackSpeed", 64, AttributeModifier.Operation.ADD_NUMBER)
-		);
 	}
 }

@@ -1,5 +1,5 @@
 name: DynamicFarming
-version: 0.0.1-alpha
+version: 0.1.1-beta
 main: com.neo.dynfarming.DynFarming
 api-version: 1.13
 prefix: DynFarming
