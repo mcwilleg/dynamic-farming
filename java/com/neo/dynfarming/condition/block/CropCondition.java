@@ -6,6 +6,23 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 public class CropCondition extends BlockCondition {
+	private static final String[] CROP_MATERIALS;
+	
+	static {
+		if(Utils.isVersionBefore(1, 13, 0)) {
+			// 1.12 crop names
+			CROP_MATERIALS = new String[] {
+					"CROPS", "POTATO", "CARROT", "PUMPKIN_STEM", "MELON_STEM", "SUGAR_CANE_BLOCK"
+			};
+		} else {
+			// 1.13+ crop names
+			CROP_MATERIALS = new String[] {
+					"WHEAT", "POTATOES", "CARROTS", "PUMPKIN_STEM", "ATTACHED_PUMPKIN_STEM", "MELON_STEM",
+					"ATTACHED_MELON_STEM", "SUGAR_CANE", "BAMBOO", "SWEET_BERRY_BUSH"
+			};
+		}
+	}
+	
 	public CropCondition(Block block) {
 		super(block, 2);
 	}
@@ -38,17 +55,8 @@ public class CropCondition extends BlockCondition {
 	}
 	
 	public double getPopulationMultiplier() {
-		double population = environment.getAmount(Material.WHEAT);
-		population += environment.getAmount(Material.POTATOES);
-		population += environment.getAmount(Material.CARROTS);
-		population += environment.getAmount(Material.PUMPKIN_STEM);
-		population += environment.getAmount(Material.ATTACHED_PUMPKIN_STEM);
-		population += environment.getAmount(Material.MELON_STEM);
-		population += environment.getAmount(Material.ATTACHED_MELON_STEM);
-		population += environment.getAmount(Material.SUGAR_CANE);
-		
-		String[] materials = new String[] {"BAMBOO", "SWEET_BERRY_BUSH"};
-		for(String m : materials) {
+		double population = 0;
+		for(String m : CROP_MATERIALS) {
 			try {
 				population += environment.getAmount(Material.valueOf(m));
 			} catch(Exception ex) {

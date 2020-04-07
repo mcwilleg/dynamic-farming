@@ -23,16 +23,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.text.DecimalFormat;
 
 public final class DynFarming extends JavaPlugin implements Listener {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
+	// debug
 	private static boolean COLOR = true;
-	
-	// TODO remove debug
 	private static final DecimalFormat DECIMAL = new DecimalFormat("0.00");
 	
 	@Override
 	public void onEnable() {
-		// Plugin startup logic
 		if(DEBUG) {
 			registerListener(this);
 		}

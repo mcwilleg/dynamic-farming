@@ -99,7 +99,7 @@ public class HarvestListener implements Listener {
 			while(iter.hasNext()) {
 				ItemStack i = iter.next();
 				double amount = i.getAmount();
-				if(!i.getType().name().endsWith("_SEEDS")) {
+				if(!i.getType().name().endsWith("SEEDS")) {
 					amount *= multiplier;
 					int truncated = (int) amount;
 					double chance = amount - truncated;
