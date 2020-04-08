@@ -23,7 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.text.DecimalFormat;
 
 public final class DynFarming extends JavaPlugin implements Listener {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	// debug
 	private static boolean COLOR = true;

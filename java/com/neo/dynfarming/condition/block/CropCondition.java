@@ -4,6 +4,8 @@ import com.neo.dynfarming.util.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.BlockData;
 
 public class CropCondition extends BlockCondition {
 	private static final String[] CROP_MATERIALS;
@@ -31,10 +33,15 @@ public class CropCondition extends BlockCondition {
 	public double getDropMultiplier() {
 		double multiplier = 1;
 		
-		multiplier *= getWaterMultiplier();
-		multiplier *= getTemperatureMultiplier();
-		multiplier *= getPopulationMultiplier();
-		
+		BlockData data = block.getBlockData();
+		if(data instanceof Ageable) {
+			Ageable ageable = (Ageable) data;
+			if(ageable.getAge() == ageable.getMaximumAge()) {
+				multiplier *= getWaterMultiplier();
+				multiplier *= getTemperatureMultiplier();
+				multiplier *= getPopulationMultiplier();
+			}
+		}
 		return multiplier;
 	}
 	

@@ -2,6 +2,7 @@ package com.neo.dynfarming.condition.entity;
 
 import com.neo.dynfarming.util.Utils;
 import org.bukkit.Material;
+import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
 
 public class LivestockCondition extends EntityCondition {
@@ -13,9 +14,13 @@ public class LivestockCondition extends EntityCondition {
 	public double getDropMultiplier() {
 		double multiplier = 1;
 		
-		multiplier *= getTerrainMultiplier();
-		multiplier *= getCrowdingMultiplier();
-		
+		if(entity instanceof Ageable) {
+			Ageable ageable = (Ageable) entity;
+			if(ageable.isAdult()) {
+				multiplier *= getTerrainMultiplier();
+				multiplier *= getCrowdingMultiplier();
+			}
+		}
 		return multiplier;
 	}
 	
